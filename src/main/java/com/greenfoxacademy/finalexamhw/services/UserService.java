@@ -1,0 +1,12 @@
+package com.greenfoxacademy.finalexamhw.services;
+
+import com.greenfoxacademy.finalexamhw.dtos.LoggedInUserDTO;
+import com.greenfoxacademy.finalexamhw.dtos.RegistrationDTO;
+import com.greenfoxacademy.finalexamhw.models.User;
+
+public interface UserService {
+  boolean existsByUsername(String username);
+  User saveUser(User user);
+  LoggedInUserDTO validateUser(RegistrationDTO registrationDTO);
+  User findByUsername(String username);
+}
