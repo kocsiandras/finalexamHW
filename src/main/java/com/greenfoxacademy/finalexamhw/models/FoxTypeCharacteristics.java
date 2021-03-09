@@ -28,9 +28,6 @@ public class FoxTypeCharacteristics {
   private String favFood;
 
   @Column
-  private String favDrink;
-
-  @Column
   private int startingHappinessLevel;
 
 }

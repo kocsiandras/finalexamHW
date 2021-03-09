@@ -9,4 +9,5 @@ public interface UserService {
   User saveUser(User user);
   LoggedInUserDTO validateUser(RegistrationDTO registrationDTO);
   User findByUsername(String username);
+  User findById(long id);
 }

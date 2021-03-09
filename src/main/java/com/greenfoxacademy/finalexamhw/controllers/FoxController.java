@@ -40,13 +40,11 @@ public class FoxController {
     Fox fox = Fox.builder()
         .foxPrice(foxTypeCharacteristics.getPrice())
         .favFood(foxTypeCharacteristics.getFavFood())
-        .favDrink(foxTypeCharacteristics.getFavDrink())
         .foxName(newFoxDTO.getFoxName())
         .foxType(newFoxDTO.getFoxType())
         .foxPrice(foxTypeCharacteristics.getPrice())
         .happinessLevel(foxTypeCharacteristics.getStartingHappinessLevel())
         .hungerLevel(10)
-        .thirstLevel(10)
         .build();
     if (authenticatedUser == null) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
