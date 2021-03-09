@@ -70,6 +70,6 @@ class RegistrationControllerTest {
     mockMvc.perform(post("/register")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(user)))
-        .andExpect(status().isBadRequest());
+        .andExpect(status().isCreated());
   }
 }

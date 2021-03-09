@@ -25,11 +25,11 @@ public class LoginController {
   public ResponseEntity<?> login(@RequestBody RegistrationDTO registrationDTO) {
     if (registrationDTO.getUsername() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Please add a username"));
-    } else if (registrationDTO.getPassword() == null){
+    } else if (registrationDTO.getPassword() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Please add a password"));
-    } else if (registrationDTO.getPassword() == null && registrationDTO.getUsername() == null){
+    } else if (registrationDTO.getPassword() == null && registrationDTO.getUsername() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Please add a password and a username"));
-    } else if (!userService.existsByUsername(registrationDTO.getUsername())){
+    } else if (!userService.existsByUsername(registrationDTO.getUsername())) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("This username does not exist"));
     } else {
       LoggedInUserDTO loggedInUserDTO = userService.validateUser(registrationDTO);

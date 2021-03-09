@@ -3,6 +3,8 @@ package com.greenfoxacademy.finalexamhw.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,4 +26,10 @@ public class User {
 
   @Column
   private int money;
+
+  @OneToMany(fetch = FetchType.EAGER)
+  @JoinTable(name = "user_fox",
+      joinColumns = @JoinColumn(name = "user_id"),
+      inverseJoinColumns = @JoinColumn(name = "fox_id"))
+  private List<Fox> foxList = new ArrayList<>();
 }

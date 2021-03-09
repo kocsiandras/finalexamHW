@@ -29,13 +29,13 @@ public class RegistrationController {
 
   @PostMapping(path = "/register")
   public ResponseEntity<?> register(@RequestBody RegistrationDTO registrationDTO) {
-    if (registrationDTO.getUsername()==null) {
+    if (registrationDTO.getUsername() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Please give a username"));
-    } else if (registrationDTO.getPassword()== null) {
+    } else if (registrationDTO.getPassword() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Please give a password"));
-    } else if (registrationDTO.getPassword()== null && registrationDTO.getUsername() == null) {
+    } else if (registrationDTO.getPassword() == null && registrationDTO.getUsername() == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Please give a password and an username"));
-    }else if (userService.existsByUsername(registrationDTO.getUsername())){
+    } else if (userService.existsByUsername(registrationDTO.getUsername())) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Username already exists"));
     } else {
       User user = User.builder()

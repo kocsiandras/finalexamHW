@@ -1,29 +1,28 @@
 package com.greenfoxacademy.finalexamhw.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Getter
-@Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Fox {
+@Getter
+@Setter
+public class FoxTypeCharacteristics {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private long id;
-
-  @Column
-  private String foxName;
+  long id;
 
   @Column
   private String foxType;
 
   @Column
-  private int foxPrice;
+  private int price;
 
   @Column
   private String favFood;
@@ -32,11 +31,6 @@ public class Fox {
   private String favDrink;
 
   @Column
-  private int happinessLevel;
+  private int startingHappinessLevel;
 
-  @Column
-  private int hungerLevel;
-
-  @Column
-  private int thirstLevel;
 }
