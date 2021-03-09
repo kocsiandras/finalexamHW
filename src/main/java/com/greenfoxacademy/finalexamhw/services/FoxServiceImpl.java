@@ -31,5 +31,15 @@ public class FoxServiceImpl implements FoxService{
     return foxTypeList.contains(foxType);
   }
 
+  @Override
+  public boolean existsById(long id) {
+    return foxRepository.existsById(id);
+  }
+
+  @Override
+  public Fox findById(long id) {
+    return foxRepository.findById(id);
+  }
+
 
 }

@@ -4,5 +4,6 @@ import com.greenfoxacademy.finalexamhw.models.Fox;
 import org.springframework.data.repository.CrudRepository;
 
 public interface FoxRepository extends CrudRepository<Fox, Long> {
-
+    boolean existsById(long id);
+    Fox findById(long id);
 }
