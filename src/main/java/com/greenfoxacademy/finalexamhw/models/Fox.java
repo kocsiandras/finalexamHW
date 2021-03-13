@@ -34,4 +34,7 @@ public class Fox {
   @Column
   private int hungerLevel;
 
+  @Column
+  private String status;
+
 }

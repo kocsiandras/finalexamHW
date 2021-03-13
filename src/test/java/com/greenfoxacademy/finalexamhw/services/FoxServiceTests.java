@@ -16,7 +16,8 @@ public class FoxServiceTests {
   private final UserServiceImpl userService = Mockito.mock(UserServiceImpl.class);
   private final FoxRepository foxRepository = Mockito.mock(FoxRepository.class);
   private final FoodRepository foodRepository = Mockito.mock(FoodRepository.class);
-  FoxServiceImpl foxService = new FoxServiceImpl(foxRepository, foodRepository, userService);
+  private final FoxTypeCharacteristicsServiceImpl foxTypeCharacteristicsService = Mockito.mock(FoxTypeCharacteristicsServiceImpl.class);
+  FoxServiceImpl foxService = new FoxServiceImpl(foxRepository, foodRepository, userService,foxTypeCharacteristicsService);
 
   @Test
   public void feedShouldRemoveFoodFromFoodList() {

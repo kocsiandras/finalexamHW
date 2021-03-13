@@ -29,7 +29,7 @@ public class User {
   @Column
   private int money;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(name = "user_fox",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "fox_id"))

@@ -30,4 +30,7 @@ public class FoxTypeCharacteristics {
   @Column
   private int startingHappinessLevel;
 
+  @Column
+  private String status;
+
 }

@@ -1,17 +1,24 @@
 package com.greenfoxacademy.finalexamhw.services;
 
+import com.greenfoxacademy.finalexamhw.dtos.NewFoxDTO;
 import com.greenfoxacademy.finalexamhw.models.Food;
 import com.greenfoxacademy.finalexamhw.models.Fox;
+import com.greenfoxacademy.finalexamhw.models.FoxTypeCharacteristics;
 import com.greenfoxacademy.finalexamhw.models.User;
 import com.greenfoxacademy.finalexamhw.repositories.FoodRepository;
 import com.greenfoxacademy.finalexamhw.repositories.FoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FoxServiceImpl implements FoxService {
+
+  final
+  FoxTypeCharacteristicsServiceImpl foxTypeCharacteristicsService;
 
   final
   UserServiceImpl userService;
@@ -22,10 +29,11 @@ public class FoxServiceImpl implements FoxService {
   final
   FoxRepository foxRepository;
 
-  public FoxServiceImpl(FoxRepository foxRepository, FoodRepository foodRepository, UserServiceImpl userService) {
+  public FoxServiceImpl(FoxRepository foxRepository, FoodRepository foodRepository, UserServiceImpl userService, FoxTypeCharacteristicsServiceImpl foxTypeCharacteristicsService) {
     this.foxRepository = foxRepository;
     this.foodRepository = foodRepository;
     this.userService = userService;
+    this.foxTypeCharacteristicsService = foxTypeCharacteristicsService;
   }
 
 
@@ -64,5 +72,34 @@ public class FoxServiceImpl implements FoxService {
     user.getFoodList().remove(food);
     userService.saveUser(user);
     foxRepository.save(fox);
+  }
+
+  @Override
+  public Fox getNewFox(NewFoxDTO newFoxDTO) {
+    FoxTypeCharacteristics foxTypeCharacteristics =
+        foxTypeCharacteristicsService.findByFoxType(newFoxDTO.getFoxType());
+    Fox fox = Fox.builder()
+        .foxPrice(foxTypeCharacteristics.getPrice())
+        .favFood(foxTypeCharacteristics.getFavFood())
+        .foxName(newFoxDTO.getFoxName())
+        .foxType(newFoxDTO.getFoxType())
+        .foxPrice(foxTypeCharacteristics.getPrice())
+        .status(foxTypeCharacteristics.getStatus())
+        .happinessLevel(foxTypeCharacteristics.getStartingHappinessLevel())
+        .hungerLevel(10)
+        .build();
+    return fox;
+  }
+
+  @Scheduled(cron = "0 12 * * * ?")
+  public void updateFoxStats() {
+    List<Fox> foxes = (List<Fox>) foxRepository.findAll();
+    foxes.forEach(fox -> {
+      fox.setHungerLevel(fox.getHungerLevel() + 1);
+      fox.setHappinessLevel(fox.getHappinessLevel() - 1);
+      if (fox.getHungerLevel() >= 15) {
+        fox.setStatus("DEAD");
+      }
+    });
   }
 }

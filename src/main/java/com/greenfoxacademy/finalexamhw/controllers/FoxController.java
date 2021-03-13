@@ -40,17 +40,7 @@ public class FoxController {
   public ResponseEntity<?> getNewFox(@RequestBody NewFoxDTO newFoxDTO) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     User authenticatedUser = (User) auth.getPrincipal();
-    FoxTypeCharacteristics foxTypeCharacteristics =
-        foxTypeCharacteristicsService.findByFoxType(newFoxDTO.getFoxType());
-    Fox fox = Fox.builder()
-        .foxPrice(foxTypeCharacteristics.getPrice())
-        .favFood(foxTypeCharacteristics.getFavFood())
-        .foxName(newFoxDTO.getFoxName())
-        .foxType(newFoxDTO.getFoxType())
-        .foxPrice(foxTypeCharacteristics.getPrice())
-        .happinessLevel(foxTypeCharacteristics.getStartingHappinessLevel())
-        .hungerLevel(10)
-        .build();
+    Fox fox = foxService.getNewFox(newFoxDTO);
     if (authenticatedUser == null) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     } else if (!foxService.isValidType(newFoxDTO.getFoxType())) {
