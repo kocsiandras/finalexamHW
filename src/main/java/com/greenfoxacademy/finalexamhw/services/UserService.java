@@ -10,4 +10,6 @@ public interface UserService {
   LoggedInUserDTO validateUser(RegistrationDTO registrationDTO);
   User findByUsername(String username);
   User findById(long id);
+  boolean existsById(long id);
+  void deleteUser (long id);
 }

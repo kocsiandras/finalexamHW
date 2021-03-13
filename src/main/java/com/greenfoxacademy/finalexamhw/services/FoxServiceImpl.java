@@ -91,6 +91,11 @@ public class FoxServiceImpl implements FoxService {
     return fox;
   }
 
+  @Override
+  public void deleteFox(long id) {
+    foxRepository.deleteById(id);
+  }
+
   @Scheduled(cron = "0 12 * * * ?")
   public void updateFoxStats() {
     List<Fox> foxes = (List<Fox>) foxRepository.findAll();

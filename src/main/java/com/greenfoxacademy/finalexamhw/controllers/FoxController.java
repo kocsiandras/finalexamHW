@@ -103,4 +103,21 @@ public class FoxController {
       return ResponseEntity.status(HttpStatus.OK).body(fox);
     }
   }
+
+  @DeleteMapping(path = "/fox/delete/{id}")
+  public ResponseEntity<?> deleteFox(@PathVariable long id) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User authenticatedUser = (User) auth.getPrincipal();
+    Fox fox = foxService.findById(id);
+    if (authenticatedUser == null) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    } else if (!authenticatedUser.getFoxList().contains(fox)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not your fox!"));
+    } else if (!foxService.existsById(id)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("This fox does not exist"));
+    } else {
+      foxService.deleteFox(id);
+      return ResponseEntity.status(HttpStatus.OK).build();
+    }
+  }
 }

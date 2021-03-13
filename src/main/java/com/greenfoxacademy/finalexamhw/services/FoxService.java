@@ -12,4 +12,5 @@ public interface FoxService {
   Fox findById(long id);
   void feed(long id, long foodId, User user);
   Fox getNewFox(NewFoxDTO newFoxDTO);
+  void deleteFox(long id);
 }
