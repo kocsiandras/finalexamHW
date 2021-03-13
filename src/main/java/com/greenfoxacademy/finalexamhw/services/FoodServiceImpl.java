@@ -31,4 +31,14 @@ public class FoodServiceImpl implements FoodService{
   public void saveFood(Food food) {
     foodRepository.save(food);
   }
+
+  @Override
+  public Food findById(long id) {
+    return foodRepository.findById(id);
+  }
+
+  @Override
+  public boolean existById(long id) {
+    return foodRepository.existsById(id);
+  }
 }

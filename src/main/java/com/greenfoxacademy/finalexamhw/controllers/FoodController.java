@@ -35,8 +35,8 @@ public class FoodController {
     this.foodPriceService = foodPriceService;
   }
 
-  @GetMapping (path = "/newfood")
-  public ResponseEntity<?> buyFood(){
+  @GetMapping(path = "/newfood")
+  public ResponseEntity<?> buyFood() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     User authenticatedUser = (User) auth.getPrincipal();
     int foodPrice = (int) foodPriceService.getActualFoodPrice().getFoodPrice();
@@ -46,10 +46,10 @@ public class FoodController {
         .build();
     if (authenticatedUser == null) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-    } else if(authenticatedUser.getMoney()<food.getFoodPrice()){
+    } else if (authenticatedUser.getMoney() < food.getFoodPrice()) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("not enough money!"));
     } else {
-      authenticatedUser.setMoney(authenticatedUser.getMoney()-foodPrice);
+      authenticatedUser.setMoney(authenticatedUser.getMoney() - foodPrice);
       authenticatedUser.getFoodList().add(food);
       foodService.saveFood(food);
       userService.saveUser(authenticatedUser);

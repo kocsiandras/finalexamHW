@@ -21,4 +21,18 @@ public class Food {
 
   @Column
   private int foodPrice;
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Food) {
+      Food other = (Food) obj;
+      return other.getId() == this.getId();
+    }
+    return super.equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) this.getId();
+  }
 }

@@ -31,8 +31,8 @@ public class FoodPriceController {
     }
   }
 
-  @GetMapping (path = "/foodpricestory")
-  public ResponseEntity<?> getFoodPriceStory(){
+  @GetMapping(path = "/foodpricestory")
+  public ResponseEntity<?> getFoodPriceStory() {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     User authenticatedUser = (User) auth.getPrincipal();
     if (authenticatedUser == null) {

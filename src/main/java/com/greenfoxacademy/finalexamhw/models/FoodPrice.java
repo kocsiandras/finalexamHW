@@ -1,8 +1,10 @@
 package com.greenfoxacademy.finalexamhw.models;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -18,4 +20,10 @@ public class FoodPrice {
 
   @Column
   private double foodPrice;
+
+  @Column(name = "updated_at")
+  @CreationTimestamp
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date updatedAt;
+
 }

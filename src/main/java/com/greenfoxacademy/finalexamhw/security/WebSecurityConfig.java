@@ -24,6 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.POST, "/register").permitAll()
         .antMatchers(HttpMethod.POST, "/login").permitAll()
         .antMatchers(HttpMethod.POST, "/fox/newfox").permitAll()
+        .antMatchers(HttpMethod.GET, "/fox/*").permitAll()
+        .antMatchers(HttpMethod.GET, "/newfood").permitAll()
+        .antMatchers(HttpMethod.POST, "/fox/feed/*/*").permitAll()
         .anyRequest().authenticated()
         .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

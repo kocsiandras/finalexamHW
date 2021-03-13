@@ -29,13 +29,13 @@ public class User {
   @Column
   private int money;
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @JoinTable(name = "user_fox",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "fox_id"))
   private List<Fox> foxList = new ArrayList<>();
 
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
   @JoinTable(name = "user_food",
       joinColumns = @JoinColumn(name = "user_id"),
       inverseJoinColumns = @JoinColumn(name = "food_id"))
