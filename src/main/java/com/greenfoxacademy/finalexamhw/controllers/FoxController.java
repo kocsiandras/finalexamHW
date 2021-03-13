@@ -1,6 +1,7 @@
 package com.greenfoxacademy.finalexamhw.controllers;
 
 import com.greenfoxacademy.finalexamhw.dtos.NewFoxDTO;
+import com.greenfoxacademy.finalexamhw.dtos.NewFoxName;
 import com.greenfoxacademy.finalexamhw.models.*;
 import com.greenfoxacademy.finalexamhw.services.FoodServiceImpl;
 import com.greenfoxacademy.finalexamhw.services.FoxServiceImpl;
@@ -79,9 +80,27 @@ public class FoxController {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not existing fox"));
     } else if (!foodService.existById(foodId)) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not existing fox"));
-    }else {
+    } else {
       foxService.feed(foxId, foodId, authenticatedUser);
       return ResponseEntity.status(HttpStatus.OK).body(foxService.findById(foxId));
+    }
+  }
+
+  @PatchMapping(path = "/fox/rename/{id}")
+  public ResponseEntity<?> renameFox(@PathVariable long id, @RequestBody NewFoxName newFoxName) {
+    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    User authenticatedUser = (User) auth.getPrincipal();
+    Fox fox = foxService.findById(id);
+    if (authenticatedUser == null) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    } else if (!authenticatedUser.getFoxList().contains(fox)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not your fox!"));
+    } else if (!foxService.existsById(id)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("This fox does not exist"));
+    } else {
+      fox.setFoxName(newFoxName.getNewFoxName());
+      foxService.saveFox(fox);
+      return ResponseEntity.status(HttpStatus.OK).body(fox);
     }
   }
 }

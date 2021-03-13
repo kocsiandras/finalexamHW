@@ -3,6 +3,7 @@ package com.greenfoxacademy.finalexamhw.models;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -37,4 +38,17 @@ public class Fox {
   @Column
   private String status;
 
+  @Override
+  public boolean equals(Object obj) {
+    if (obj instanceof Fox) {
+      Fox other = (Fox) obj;
+      return other.getId() == this.getId();
+    }
+    return super.equals(obj);
+  }
+
+  @Override
+  public int hashCode() {
+    return (int) this.getId();
+  }
 }
