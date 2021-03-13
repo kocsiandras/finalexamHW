@@ -28,6 +28,7 @@ public class FoxServiceImpl implements FoxService {
     this.userService = userService;
   }
 
+
   @Override
   public void saveFox(Fox fox) {
     foxRepository.save(fox);
@@ -55,14 +56,13 @@ public class FoxServiceImpl implements FoxService {
     Food food = foodRepository.findById(foodId);
     if (fox.getFavFood().equals(food.getFoodName())) {
       fox.setHappinessLevel(fox.getHappinessLevel() + 2);
-      fox.setHungerLevel(fox.getHungerLevel() + 1);
+      fox.setHungerLevel(fox.getHungerLevel() - 1);
     } else {
       fox.setHappinessLevel(fox.getHappinessLevel() + 1);
-      fox.setHungerLevel(fox.getHungerLevel() + 1);
+      fox.setHungerLevel(fox.getHungerLevel() - 1);
     }
     user.getFoodList().remove(food);
     userService.saveUser(user);
     foxRepository.save(fox);
-
   }
 }
