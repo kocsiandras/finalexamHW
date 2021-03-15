@@ -46,17 +46,6 @@ public class User {
       inverseJoinColumns = @JoinColumn(name = "role_id"))
   private Set<Role> roles = new HashSet<>();
 
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    Set<Role> roles = this.getRoles();
-    List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-
-    for (Role role : roles) {
-      authorities.add(new SimpleGrantedAuthority(role.getName()));
-    }
-
-    return authorities;
-  }
-
   public void addToRoles(Role newRole) {
     this.roles.add(newRole);
   }

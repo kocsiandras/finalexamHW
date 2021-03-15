@@ -1,6 +1,7 @@
 package com.greenfoxacademy.finalexamhw.controllers;
 
 import com.greenfoxacademy.finalexamhw.models.ResponseError;
+import com.greenfoxacademy.finalexamhw.models.Role;
 import com.greenfoxacademy.finalexamhw.models.User;
 import com.greenfoxacademy.finalexamhw.services.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +43,11 @@ public class UserController {
   public ResponseEntity<?> deleteUser(@PathVariable long id){
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     User authenticatedUser = (User) auth.getPrincipal();
-    boolean isItAdmin = auth.getAuthorities().contains(new SimpleGrantedAuthority("admin"));
     if (authenticatedUser == null) {
       return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     } else if (!userService.existsById(id)){
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("User does not exist"));
-    } else if (!isItAdmin){
+    } else if (!userService.isAdmin(authenticatedUser)){
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("No authority for this"));
     } else {
       userService.deleteUser(id);

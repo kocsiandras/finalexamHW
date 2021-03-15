@@ -2,6 +2,7 @@ package com.greenfoxacademy.finalexamhw.services;
 
 import com.greenfoxacademy.finalexamhw.dtos.LoggedInUserDTO;
 import com.greenfoxacademy.finalexamhw.dtos.RegistrationDTO;
+import com.greenfoxacademy.finalexamhw.models.Role;
 import com.greenfoxacademy.finalexamhw.models.User;
 
 public interface UserService {
@@ -12,4 +13,5 @@ public interface UserService {
   User findById(long id);
   boolean existsById(long id);
   void deleteUser (long id);
+  boolean isAdmin(User user);
 }

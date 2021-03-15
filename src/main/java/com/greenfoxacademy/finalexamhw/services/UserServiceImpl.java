@@ -2,11 +2,14 @@ package com.greenfoxacademy.finalexamhw.services;
 
 import com.greenfoxacademy.finalexamhw.dtos.LoggedInUserDTO;
 import com.greenfoxacademy.finalexamhw.dtos.RegistrationDTO;
+import com.greenfoxacademy.finalexamhw.models.Role;
 import com.greenfoxacademy.finalexamhw.models.User;
 import com.greenfoxacademy.finalexamhw.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -63,5 +66,15 @@ public class UserServiceImpl implements UserService{
   @Override
   public void deleteUser(long id) {
     userRepository.deleteById(id);
+  }
+
+  @Override
+  public boolean isAdmin(User user) {
+    for (Role role : user.getRoles()){
+      if(role.getName().equals("admin")){
+        return true;
+      }
+    }
+    return false;
   }
 }
