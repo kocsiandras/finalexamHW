@@ -3,12 +3,7 @@ package com.greenfoxacademy.finalexamhw.controllers;
 import com.greenfoxacademy.finalexamhw.dtos.NewFoxDTO;
 import com.greenfoxacademy.finalexamhw.dtos.NewFoxName;
 import com.greenfoxacademy.finalexamhw.models.*;
-import com.greenfoxacademy.finalexamhw.services.FoodServiceImpl;
-import com.greenfoxacademy.finalexamhw.services.FoxServiceImpl;
-import com.greenfoxacademy.finalexamhw.services.FoxTypeCharacteristicsServiceImpl;
-import com.greenfoxacademy.finalexamhw.services.UserServiceImpl;
-import jdk.nashorn.internal.objects.annotations.Getter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.greenfoxacademy.finalexamhw.services.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -19,18 +14,18 @@ import org.springframework.web.bind.annotation.*;
 public class FoxController {
 
   final
-  FoodServiceImpl foodService;
+  FoodService foodService;
 
   final
-  FoxServiceImpl foxService;
+  FoxService foxService;
 
   final
-  UserServiceImpl userService;
+  UserService userService;
 
   final
-  FoxTypeCharacteristicsServiceImpl foxTypeCharacteristicsService;
+  FoxTypeCharacteristicsService foxTypeCharacteristicsService;
 
-  public FoxController(FoxTypeCharacteristicsServiceImpl foxTypeCharacteristicsService, UserServiceImpl userService, FoxServiceImpl foxService, FoodServiceImpl foodService) {
+  public FoxController(FoxTypeCharacteristicsService foxTypeCharacteristicsService, UserService userService, FoxService foxService, FoodService foodService) {
     this.foxTypeCharacteristicsService = foxTypeCharacteristicsService;
     this.userService = userService;
     this.foxService = foxService;

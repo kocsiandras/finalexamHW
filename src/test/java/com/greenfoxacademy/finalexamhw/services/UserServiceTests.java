@@ -4,8 +4,6 @@ import com.greenfoxacademy.finalexamhw.dtos.LoggedInUserDTO;
 import com.greenfoxacademy.finalexamhw.dtos.RegistrationDTO;
 import com.greenfoxacademy.finalexamhw.models.User;
 import com.greenfoxacademy.finalexamhw.repositories.UserRepository;
-import com.greenfoxacademy.finalexamhw.services.JWTServiceImpl;
-import com.greenfoxacademy.finalexamhw.services.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -36,6 +34,6 @@ public class UserServiceTests {
     User newUser = new User();
     Mockito.when(userRepository.save(newUser)).thenReturn(newUser);
     User user = userService.saveUser(newUser);
-    Assert.assertEquals(user, newUser);
+    Assert.assertEquals(newUser, user);
   }
 }

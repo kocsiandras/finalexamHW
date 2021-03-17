@@ -5,8 +5,7 @@ import com.greenfoxacademy.finalexamhw.models.ResponseError;
 import com.greenfoxacademy.finalexamhw.models.Role;
 import com.greenfoxacademy.finalexamhw.models.User;
 import com.greenfoxacademy.finalexamhw.services.RoleServiceImpl;
-import com.greenfoxacademy.finalexamhw.services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.greenfoxacademy.finalexamhw.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,9 +25,9 @@ public class RegistrationController {
   BCryptPasswordEncoder bCryptPasswordEncoder;
 
   final
-  UserServiceImpl userService;
+  UserService userService;
 
-  public RegistrationController(UserServiceImpl userService, BCryptPasswordEncoder bCryptPasswordEncoder, RoleServiceImpl roleService) {
+  public RegistrationController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder, RoleServiceImpl roleService) {
     this.userService = userService;
     this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     this.roleService = roleService;

@@ -1,7 +1,7 @@
 package com.greenfoxacademy.finalexamhw.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.greenfoxacademy.finalexamhw.dtos.LoggedInUserDTO;
+import com.greenfoxacademy.finalexamhw.dtos.NewFoxName;
 import com.greenfoxacademy.finalexamhw.models.Fox;
 import com.greenfoxacademy.finalexamhw.models.Role;
 import com.greenfoxacademy.finalexamhw.models.User;
@@ -16,24 +16,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
+
+import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 import static org.hamcrest.core.Is.is;
-
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -82,5 +79,68 @@ class FoxControllerTest {
         .andExpect(status().isOk()).andReturn();
     Fox result = new ObjectMapper().readValue(mvcResult.getResponse().getContentAsString(), Fox.class);
     Assert.assertEquals(1, result.getId());
+  }
+
+  @Test
+  public void testRenameFox() throws Exception {
+    User newUser = User.builder()
+        .password("pw")
+        .username("user")
+        .foxList(new ArrayList<>())
+        .roles(new HashSet<Role>())
+        .build();
+    Fox fox = Fox.builder()
+        .foxName("foxxy")
+        .build();
+    NewFoxName newFoxName = NewFoxName.builder()
+        .newFoxName("fox")
+        .build();
+    foxRepository.save(fox);
+    userRepository.save(newUser);
+    newUser.getFoxList().add(fox);
+    userRepository.save(newUser);
+    String token = jwtService.createToken("user");
+    ObjectMapper objectMapper = new ObjectMapper();
+    MvcResult mvcResult = mockMvc.perform(patch("/fox/rename/" + fox.getId())
+        .header("Authorization", "Bearer " + token)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(newFoxName)))
+        .andExpect(status().isOk()).andReturn();
+    Fox result = new ObjectMapper().readValue(mvcResult.getResponse().getContentAsString(), Fox.class);
+    Assert.assertEquals("fox", result.getFoxName());
+  }
+
+  @Test
+  public void testRenameFoxWhenNotOwned() throws Exception {
+    User newUser = User.builder()
+        .password("pw")
+        .username("user")
+        .foxList(new ArrayList<>())
+        .roles(new HashSet<Role>())
+        .build();
+    User user2 = User.builder()
+        .password("pw")
+        .username("user2")
+        .foxList(new ArrayList<>())
+        .roles(new HashSet<Role>())
+        .build();
+    Fox fox = Fox.builder()
+        .foxName("foxxy")
+        .build();
+    NewFoxName newFoxName = NewFoxName.builder()
+        .newFoxName("fox")
+        .build();
+    foxRepository.save(fox);
+    userRepository.save(newUser);
+    user2.getFoxList().add(fox);
+    userRepository.save(newUser);
+    String token = jwtService.createToken("user");
+    ObjectMapper objectMapper = new ObjectMapper();
+    mockMvc.perform(patch("/fox/rename/" + fox.getId())
+        .header("Authorization", "Bearer " + token)
+        .contentType(MediaType.APPLICATION_JSON)
+        .content(objectMapper.writeValueAsString(newFoxName)))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("message", is("Not your fox!")));
   }
 }

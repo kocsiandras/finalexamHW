@@ -1,8 +1,7 @@
 package com.greenfoxacademy.finalexamhw.controllers;
 
 import com.greenfoxacademy.finalexamhw.models.User;
-import com.greenfoxacademy.finalexamhw.services.FoodPriceServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.greenfoxacademy.finalexamhw.services.FoodPriceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class FoodPriceController {
 
   final
-  FoodPriceServiceImpl foodPriceService;
+  FoodPriceService foodPriceService;
 
-  public FoodPriceController(FoodPriceServiceImpl foodPriceService) {
+  public FoodPriceController(FoodPriceService foodPriceService) {
     this.foodPriceService = foodPriceService;
   }
 

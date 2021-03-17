@@ -3,8 +3,7 @@ package com.greenfoxacademy.finalexamhw.controllers;
 import com.greenfoxacademy.finalexamhw.dtos.LoggedInUserDTO;
 import com.greenfoxacademy.finalexamhw.dtos.RegistrationDTO;
 import com.greenfoxacademy.finalexamhw.models.ResponseError;
-import com.greenfoxacademy.finalexamhw.services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.greenfoxacademy.finalexamhw.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class LoginController {
 
   final
-  UserServiceImpl userService;
+  UserService userService;
 
-  public LoginController(UserServiceImpl userService) {
+  public LoginController(UserService userService) {
     this.userService = userService;
   }
 

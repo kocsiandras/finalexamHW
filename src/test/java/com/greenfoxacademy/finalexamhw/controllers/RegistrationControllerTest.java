@@ -1,6 +1,5 @@
 package com.greenfoxacademy.finalexamhw.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.greenfoxacademy.finalexamhw.models.User;
 import org.junit.jupiter.api.Test;
@@ -11,17 +10,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.util.HashSet;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
 import static org.hamcrest.core.Is.is;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

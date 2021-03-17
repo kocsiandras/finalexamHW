@@ -3,7 +3,6 @@ package com.greenfoxacademy.finalexamhw.security;
 import com.greenfoxacademy.finalexamhw.models.User;
 import com.greenfoxacademy.finalexamhw.services.JWTServiceImpl;
 import com.greenfoxacademy.finalexamhw.services.UserServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;

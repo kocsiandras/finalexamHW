@@ -9,15 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import java.util.HashSet;
 
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,17 +34,23 @@ class LoginControllerTest {
   @Autowired
   ObjectMapper objectMapper;
 
+  @Autowired
+  BCryptPasswordEncoder bCryptPasswordEncoder;
+
   @Test
   public void successfulLoginTest() throws Exception {
     User newUser = User.builder()
         .password("pw")
         .username("username")
         .build();
-    userRepository.save(newUser);
+    User user2 = User.builder()
+        .password(bCryptPasswordEncoder.encode("pw"))
+        .username("username")
+        .build();
+    userRepository.save(user2);
     mockMvc.perform(post("/login")
         .contentType(MediaType.APPLICATION_JSON)
         .content(objectMapper.writeValueAsString(newUser)))
-        .andDo(MockMvcResultHandlers.print())
         .andExpect(status().isCreated())
         .andExpect(jsonPath("username", is("username")))
         .andExpect(jsonPath("token").exists());
