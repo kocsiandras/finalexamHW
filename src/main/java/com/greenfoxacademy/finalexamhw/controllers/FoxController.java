@@ -74,7 +74,11 @@ public class FoxController {
     } else if (!foxService.existsById(foxId)) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not existing fox"));
     } else if (!foodService.existById(foodId)) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not existing fox"));
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not existing food"));
+    } else if (!authenticatedUser.getFoxList().contains(foxService.findById(foxId))) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Not your fox"));
+    } else if (!authenticatedUser.getFoodList().contains(foodService.findById(foodId))) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseError("Do not have that food"));
     } else {
       foxService.feed(foxId, foodId, authenticatedUser);
       return ResponseEntity.status(HttpStatus.OK).body(foxService.findById(foxId));

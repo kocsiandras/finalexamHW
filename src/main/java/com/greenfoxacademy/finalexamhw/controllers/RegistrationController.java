@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashSet;
+
 @RestController
 public class RegistrationController {
 
@@ -51,9 +53,10 @@ public class RegistrationController {
       User user = User.builder()
           .username(registrationDTO.getUsername())
           .password(bCryptPasswordEncoder.encode(registrationDTO.getPassword()))
+          .roles(new HashSet<Role>())
           .money(Integer.parseInt(startingMoney))
           .build();
-      user.addToRoles(role);
+      user.getRoles().add(role);
       userService.saveUser(user);
       return ResponseEntity.status(HttpStatus.CREATED).body(user);
     }

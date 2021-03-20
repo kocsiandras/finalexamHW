@@ -29,7 +29,7 @@ public class FoxServiceTests {
         .build();
     User user = new User();
     user.getFoodList().add(food);
-    Mockito.when(foxRepository.findById(fox.getId())).thenReturn(fox);
+    user.getFoxList().add(fox);
     Mockito.when(foodRepository.findById(food.getId())).thenReturn(food);
     Mockito.when(userRepository.save(user)).thenReturn(user);
     foxService.feed(fox.getId(), food.getId(), user);
@@ -47,7 +47,7 @@ public class FoxServiceTests {
         .build();
     User user = new User();
     user.getFoodList().add(food);
-    Mockito.when(foxRepository.findById(fox.getId())).thenReturn(fox);
+    user.getFoxList().add(fox);
     Mockito.when(foodRepository.findById(food.getId())).thenReturn(food);
     Mockito.when(userRepository.save(user)).thenReturn(user);
     foxService.feed(fox.getId(), food.getId(), user);
@@ -65,7 +65,7 @@ public class FoxServiceTests {
         .build();
     User user = new User();
     user.getFoodList().add(food);
-    Mockito.when(foxRepository.findById(fox.getId())).thenReturn(fox);
+    user.getFoxList().add(fox);
     Mockito.when(foodRepository.findById(food.getId())).thenReturn(food);
     Mockito.when(userRepository.save(user)).thenReturn(user);
     foxService.feed(fox.getId(), food.getId(), user);

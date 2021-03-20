@@ -60,7 +60,7 @@ public class FoxServiceImpl implements FoxService {
 
   @Override
   public void feed(long foxId, long foodId, User user) {
-    Fox fox = foxRepository.findById(foxId);
+    Fox fox = user.getFoxList().stream().filter(x -> x.getId() == foxId).findFirst().get();
     Food food = foodRepository.findById(foodId);
     if (fox.getFavFood().equals(food.getFoodName())) {
       fox.setHappinessLevel(fox.getHappinessLevel() + 2);
@@ -71,7 +71,6 @@ public class FoxServiceImpl implements FoxService {
     }
     user.getFoodList().remove(food);
     userService.saveUser(user);
-    foxRepository.save(fox);
   }
 
   @Override

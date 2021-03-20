@@ -43,7 +43,7 @@ class UserControllerTest {
     Role role = Role.builder()
         .name("admin")
         .build();
-    newUser.addToRoles(role);
+    newUser.getRoles().add(role);
     userRepository.save(newUser);
     String token = jwtService.createToken("user");
     mockMvc.perform(delete("/user/delete/" + newUser.getId())
@@ -61,7 +61,7 @@ class UserControllerTest {
     Role role = Role.builder()
         .name("user")
         .build();
-    newUser.addToRoles(role);
+    newUser.getRoles().add(role);
     userRepository.save(newUser);
     String token = jwtService.createToken("user");
     mockMvc.perform(delete("/user/delete/" + newUser.getId())
