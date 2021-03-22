@@ -46,8 +46,8 @@ public class FoxController {
     } else {
       authenticatedUser.getFoxList().add(fox);
       authenticatedUser.setMoney(authenticatedUser.getMoney() - fox.getFoxPrice());
-      userService.saveUser(authenticatedUser);
       foxService.saveFox(fox);
+      userService.saveUser(authenticatedUser);
       return ResponseEntity.status(HttpStatus.CREATED).body(fox);
     }
   }
